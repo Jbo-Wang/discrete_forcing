@@ -1,0 +1,14 @@
+[build-system]
+requires = ["setuptools>=80.9.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "libero-supplementary"
+version = "0.1.0"
+description = "LIBERO training and evaluation code"
+requires-python = ">=3.10"
+readme = "README.md"
+license = {file = "LICENSE"}
+
+[tool.setuptools.packages.find]
+include = ["starVLA*", "deployment*", "examples*"]

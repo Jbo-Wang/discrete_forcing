@@ -1,0 +1,94 @@
+run_id: libero_method
+run_root_dir: results
+seed: 42
+wandb_entity: null
+wandb_project: libero
+is_debug: false
+
+framework:
+  name: QwenPILF_v3
+  qwenvl:
+    base_vlm: Qwen/Qwen3.5-0.8B
+    attn_implementation: flash_attention_2
+    vl_hidden_dim: 1024
+    num_vl_layers: 24
+  action_model:
+    action_model_type: HybridLayerwiseFM
+    action_dim: 7
+    state_dim: 7
+    action_horizon: 8
+    discrete_action_horizon: 8
+    repeated_diffusion_steps: 8
+    add_pos_embed: true
+    max_seq_len: 1024
+    num_target_vision_tokens: 32
+    noise_beta_alpha: 1.5
+    noise_beta_beta: 1.0
+    noise_s: 0.999
+    num_timestep_buckets: 1000
+    branch_communication_on_self_attention: false
+    branch_input_mode: full
+    paired_phase_sampling: true
+    disjoint_branch_batch_routing: true
+    isolate_branch_tokens_before_shared: true
+    share_action_tokens_by_dim: false
+    joint_branch_supervision: false
+    continuous_source_mode: mix_discrete
+    continuous_source_alpha: 0.3
+    continuous_source_continuous_phase_only: true
+    continuous_condition_mask_ratio: 0.0
+    continuous_condition_use_source_alpha: true
+    continuous_condition_skip_gripper: false
+    continuous_one_step_loss_prob: 0.6
+    continuous_one_step_loss_weight: 0.5
+    num_discrete_bins: 256
+    discrete_rollout_mode: topk_lock
+    discrete_visible_loss_weight: 0.1
+    discrete_loss_weight: 0.1
+    num_discrete_steps: 1
+    num_continuous_steps: 1
+    num_inference_timesteps: 2
+    diffusion_model_cfg:
+      action_dit_hidden_dim: 1024
+      attention_head_dim: 64
+      dropout: 0.2
+      final_dropout: true
+      interleave_self_attention: true
+      norm_type: ada_norm
+      num_shared_layers: 2
+      positional_embeddings: null
+datasets:
+  vla_data:
+    dataset_py: lerobot_datasets
+    include_state: false
+    data_root_dir: datasets
+    data_mix: libero_all
+    action_type: delta_qpos
+    sequential_step_sampling: false
+    per_device_batch_size: 16
+    load_all_data_for_training: true
+    obs: [image_0]
+    video_backend: torchvision_av
+trainer:
+  max_train_steps: 80000
+  num_warmup_steps: 5000
+  save_interval: 4000
+  save_epoch_interval: 1
+  eval_interval: 100
+  learning_rate:
+    base: 2.5e-5
+    qwen_vl_interface: 1.0e-5
+    action_model: 1.0e-5
+  lr_scheduler_type: cosine_with_min_lr
+  scheduler_specific_kwargs:
+    min_lr: 1.0e-6
+  freeze_modules: ""
+  logging_frequency: 10
+  gradient_clipping: 1.0
+  gradient_checkpointing: false
+  gradient_accumulation_steps: 1
+  optimizer:
+    name: AdamW
+    betas: [0.9, 0.95]
+    eps: 1.0e-8
+    weight_decay: 1.0e-8
