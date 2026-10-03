@@ -7,7 +7,7 @@
 </p>
 
 Code for training and evaluating a discrete-to-continuous vision-language-action
-policy. The current release includes the LIBERO implementation, built on StarVLA.
+policy. 
 
 ## News
 
@@ -19,9 +19,7 @@ policy. The current release includes the LIBERO implementation, built on StarVLA
 
 The policy predicts discrete action tokens and refines the resulting action
 sequence with a continuous branch. The two branches use separate action tokens
-and share the vision-language backbone. The released training configuration and
-evaluation protocol are documented in [LIBERO](docs/LIBERO.md).
-
+and share the vision-language backbone. 
 ## Getting Started
 
 Follow the [LIBERO setup, training, and evaluation guide](docs/LIBERO.md).
