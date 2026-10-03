@@ -121,9 +121,3 @@ python check_install.py --evaluation
 The initialization check creates a temporary output directory, loads the model,
 builds the training dataloader, and reads one batch without starting training.
 The evaluation check verifies imports; it does not execute evaluation rollouts.
-
-## Third-Party Attribution
-
-Upstream copyright notices, public contributor attributions, and license terms
-are retained in the source files. LIBERO is installed separately from its public
-repository at the revision specified above.
