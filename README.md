@@ -27,12 +27,14 @@ included in this repository.
 
 ## Citation
 
+```bibtex
 @article{wang2026discrete,
   title={Discrete Forcing: Infusing Discrete Guidance into Continuous Denoising for Few-Step Action Experts},
-  author={Wang, Jingbo and Song, Wenxuan and Yu, Wenhao and Zhao, Han and Wang, Xi and Chen, Jiayi and Wang, Donglin and Wang, Yan and Li, Haoang},
+  author={Wang, Jingbo and others},
   journal={arXiv preprint arXiv:2609.39526},
   year={2026}
 }
+```
 
 ## Acknowledgments
 
