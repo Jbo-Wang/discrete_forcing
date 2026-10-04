@@ -1,0 +1,12 @@
+policy_name: starVLA
+task_name: null
+task_config: null
+ckpt_setting: null
+seed: null
+instruction_type: unseen
+log_save_path: "."
+host: "127.0.0.1"
+port: 5694
+policy_ckpt_path: null
+unnorm_key: new_embodiment
+action_mode: abs

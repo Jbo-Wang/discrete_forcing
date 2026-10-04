@@ -20,16 +20,16 @@ policy.
 The policy predicts discrete action tokens and refines the resulting action
 sequence with a continuous branch. The two branches use separate action tokens
 and share the vision-language backbone. 
+
 ## Getting Started
 
-Follow the [LIBERO setup, training, and evaluation guide](docs/LIBERO.md).
-Datasets and pretrained weights are downloaded separately; no checkpoints are
-included in this repository.
+Follow the [LIBERO guide](docs/LIBERO.md) or the
+[RoboTwin guide](docs/RoboTwin.md).
 
 ## TODO
 
 - [x] Release LIBERO training and evaluation code.
-- [ ] Add RoboTwin training and evaluation code.
+- [x] Add RoboTwin clean 50 training and evaluation code.
 
 ## Citation
 

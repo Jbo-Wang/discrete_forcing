@@ -101,4 +101,40 @@ class Libero4in1DataConfig:
 
         return ComposedModalityTransform(transforms=transforms)
 
-ROBOT_TYPE_CONFIG_MAP = {"libero_franka": Libero4in1DataConfig()}
+class RoboTwin50DataConfig:
+    video_keys = ["video.cam_high", "video.cam_left_wrist", "video.cam_right_wrist"]
+    state_keys = ["state.left_joints", "state.right_joints", "state.left_gripper", "state.right_gripper"]
+    action_keys = ["action.left_joints", "action.right_joints", "action.left_gripper", "action.right_gripper"]
+    language_keys = ["annotation.human.action.task_description"]
+    observation_indices = [0]
+    action_indices = list(range(50))
+
+    def modality_config(self):
+        return {
+            "video": ModalityConfig(delta_indices=self.observation_indices, modality_keys=self.video_keys),
+            "state": ModalityConfig(delta_indices=self.observation_indices, modality_keys=self.state_keys),
+            "action": ModalityConfig(delta_indices=self.action_indices, modality_keys=self.action_keys),
+            "language": ModalityConfig(delta_indices=self.observation_indices, modality_keys=self.language_keys),
+        }
+
+    def transform(self):
+        modes = {
+            "left_joints": "min_max",
+            "right_joints": "min_max",
+            "left_gripper": "binary",
+            "right_gripper": "binary",
+        }
+        return ComposedModalityTransform(transforms=[
+            StateActionToTensor(apply_to=self.state_keys),
+            StateActionTransform(apply_to=self.state_keys, binary_threshold=0.49,
+                                 normalization_modes={f"state.{key}": mode for key, mode in modes.items()}),
+            StateActionToTensor(apply_to=self.action_keys),
+            StateActionTransform(apply_to=self.action_keys, binary_threshold=0.49,
+                                 normalization_modes={f"action.{key}": mode for key, mode in modes.items()}),
+        ])
+
+
+ROBOT_TYPE_CONFIG_MAP = {
+    "libero_franka": Libero4in1DataConfig(),
+    "robotwin50": RoboTwin50DataConfig(),
+}
